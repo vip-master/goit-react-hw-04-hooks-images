@@ -22,21 +22,21 @@ const App=()=>{
     const [state, setState] = useState(_INITIAL_STATE_)
 
     const closeModal=()=>{
-        setState({...state, modal:null})
+        setState(state=>({...state, modal:null}))
     }    
 
     const handelSubmit=(e)=>{
         e.preventDefault()
-        setState({..._INITIAL_STATE_, query:e.target[1].value.trim().replaceAll(" ","+"),isLoading:true})        
+        setState(state=>({..._INITIAL_STATE_, query:e.target[1].value.trim().replaceAll(" ","+"),isLoading:true}))        
     }
 
     const handelCicks=({target:{dataset:{bigimage:bigImage,alt}}})=>{
-        setState({...state, modal:{bigImage,alt}})
+        setState(state=>({...state, modal:{bigImage,alt}}))
     }
 
     const downImages=async()=>{
         if(state.query===""){
-            setState({...state, isLoading:false})
+            setState(state=>({...state, isLoading:false}))
             return
         }
         
@@ -46,7 +46,7 @@ const App=()=>{
         if(state.maxPages===0 || page<state.maxPages){
             page=state.page+1
         }else{
-            setState({...state, isLoading:false,isLoadButton:false})
+            setState(state=>({...state, isLoading:false,isLoadButton:false}))
             return
         }
 
@@ -66,9 +66,9 @@ const App=()=>{
                     }))
             }
 
-            setState({...state, images:[...state.images,...images],maxPages,page,isLoading:false,isLoadButton:page<maxPages})
+            setState(state=>({...state, images:[...state.images,...images],maxPages,page,isLoading:false,isLoadButton:page<maxPages}))
         }catch(error){
-            setState({...state, isLoading:false,isLoadButton:false})
+            setState(state=>({...state, isLoading:false,isLoadButton:false}))
         }
     }
 
@@ -83,11 +83,11 @@ const App=()=>{
         if(state.isLoading) downImages()
         else if(state.afterScroll) {
             scrollUp()
-            setState({...state,afterScroll:false})
+            setState(state=>({...state,afterScroll:false}))
         }
     }, [state])
 
-    const moreImages=()=> setState({...state,isLoading:true,afterScroll:true})
+    const moreImages=()=> setState(state=>({...state,isLoading:true,afterScroll:true}))
 
     return (
             <div className="App">
